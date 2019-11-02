@@ -9,12 +9,12 @@
 - [x] Handle click on empty space - flood fill
 - [x] Handle click on mine
 - [x] Handle click on number
-- [ ] Handle winning the game
-- [ ] Show win message or lose error message
+- [x] Handle winning the game
+- [x] Show win message or lose error message
 - [ ] Unit testing of utils
 - [ ] Unit testing of mine helpers
 - [ ] Add width, height, mine count controls
-- [ ] Add restart functionality
+- [x] Add restart functionality
 - [ ] Optional: prevent lose on first click
 - [ ] Extra: keep track of stats (fastest win, winning streak)
 - [ ] Extra: flag mines with right click
