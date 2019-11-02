@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { generateMineIndexes } from './mines';
+import { generateMineIndexes, getNearbyCount } from './mines';
 import { indexToRowCol } from './utils';
 
 import './GameBoard.css';
@@ -32,9 +32,18 @@ const GameBoard = ({
     >
       {indexes.map(i => {
         const [row, column] = indexToRowCol(i, width);
+        let cellContent = '';
+
+        if (mineIndexes.has(i)) {
+          cellContent = '💣';
+        } else {
+          const nearbyCount = getNearbyCount(i, width, mineIndexes);
+          cellContent = nearbyCount !== 0 ? nearbyCount : '';
+        }
         return (
           <div
             className="tile"
+            key={`tile-${row}-${column}`}
             style={{
               gridColumnStart: column + 1,
               gridColumnEnd: column + 2,
@@ -42,7 +51,7 @@ const GameBoard = ({
               gridRowEnd: row + 2,
             }}
           >
-            {mineIndexes.has(i) ? '💣' : ''}
+            {cellContent}
           </div>
         );
       })}
