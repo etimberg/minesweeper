@@ -86,7 +86,6 @@ const GameBoard = ({
             }
           }
 
-          // const tileCountStyle = `tile-${nearbyCount}`;
           return (
             <div
               className={classNames({
