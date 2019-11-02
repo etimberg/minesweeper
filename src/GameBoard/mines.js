@@ -58,17 +58,39 @@ export function floodFillMap(i, width, height, indexToNearbyCount) {
 
     const [row, col] = indexToRowCol(idx, width);
 
-    if (row < height - 1) {
+    const canMoveLeft = col > 0;
+    const canMoveRight = col < width - 1;
+    const canMoveUp = row > 0;
+    const canMoveDown = row < height - 1;
+
+    if (canMoveDown) {
       floodFill(rowColToIndex(row + 1, col, width));
     }
-    if (row > 0) {
+    if (canMoveUp) {
       floodFill(rowColToIndex(row - 1, col, width));
     }
-    if (col > 0) {
+    if (canMoveLeft) {
       floodFill(rowColToIndex(row, col - 1, width));
     }
-    if (col < width - 1) {
+    if (canMoveRight) {
       floodFill(rowColToIndex(row, col + 1, width));
+    }
+
+    // Minesweeper needs diagonals to be filled as well
+    if (canMoveDown && canMoveLeft) {
+      floodFill(rowColToIndex(row + 1, col - 1, width));
+    }
+
+    if (canMoveDown && canMoveRight) {
+      floodFill(rowColToIndex(row + 1, col + 1, width));
+    }
+
+    if (canMoveUp && canMoveLeft) {
+      floodFill(rowColToIndex(row - 1, col - 1, width));
+    }
+
+    if (canMoveUp && canMoveRight) {
+      floodFill(rowColToIndex(row - 1, col + 1, width));
     }
   };
   floodFill(i);
