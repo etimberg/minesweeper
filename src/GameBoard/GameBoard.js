@@ -17,6 +17,9 @@ const GameBoard = ({
 }) => {
   const indexes = [...Array(width * height).keys()];
   
+  const [gameRunning, setGameRunning] = useState(false);
+  const [gameExitMessage, setGameExitMessage] = useState(null);
+
   // The indexes in the game board where mines are located
   const [mineIndexes, setMineIndexes] = useState(new Set());
 
@@ -41,40 +44,52 @@ const GameBoard = ({
   useEffect(initMines, [width, height, mineCount]);
 
   return (
-    <div
-      className="game-board"
-      style={{
-        height: `${height * 20}px`,
-        width: `${width * 20}px`,
-      }}
-    >
-      {indexes.map(i => {
-        const nearbyCount = indexToNearbyCount[i];
-        const [row, column] = indexToRowCol(i, width);
-        let cellContent = '';
+    <div className="game">
+      <button
+        className="restart-button"
+        onClick={() => {
+          initMines();
+          setGameRunning(false);
+          setRevealedIndexes(new Set());
+          setGameExitMessage(null);
+        }}
+      >
+        Restart
+      </button>
+      {gameExitMessage && (
+        <div className="exit-message">{gameExitMessage}</div>
+      )}
+      <div
+        className="game-board"
+        style={{
+          height: `${height * 20}px`,
+          width: `${width * 20}px`,
+        }}
+      >
+        {indexes.map(i => {
+          const nearbyCount = indexToNearbyCount[i];
+          const [row, column] = indexToRowCol(i, width);
+          let cellContent = '';
 
-        if (revealedIndexes.has(i)) {
-          if (mineIndexes.has(i)) {
-            cellContent = '💣';
-          } else {
-            cellContent = nearbyCount !== 0 ? nearbyCount : '';
+          if (revealedIndexes.has(i)) {
+            if (mineIndexes.has(i)) {
+              cellContent = '💣';
+            } else {
+              cellContent = nearbyCount !== 0 ? nearbyCount : '';
+            }
           }
-        }
-        return (
-          <div
-            className="tile"
-            key={`tile-${row}-${column}`}
-            style={{
-              gridColumnStart: column + 1,
-              gridColumnEnd: column + 2,
-              gridRowStart: row + 1,
-              gridRowEnd: row + 2,
-              backgroundColor: revealedIndexes.has(i) ? 'white' : 'grey',
-            }}
-            onClick={() => {
-              if (mineIndexes.has(i)) {
-                // LOSE
-              } else {
+          return (
+            <div
+              className="tile"
+              key={`tile-${row}-${column}`}
+              style={{
+                gridColumnStart: column + 1,
+                gridColumnEnd: column + 2,
+                gridRowStart: row + 1,
+                gridRowEnd: row + 2,
+                backgroundColor: revealedIndexes.has(i) ? 'white' : 'grey',
+              }}
+              onClick={() => {
                 let updatedIndexes;
 
                 if (nearbyCount === 0) {
@@ -85,15 +100,22 @@ const GameBoard = ({
                   // Clicked on a number. Just reveal that space
                   updatedIndexes = new Set([...revealedIndexes, i]);
                 }
-
                 setRevealedIndexes(updatedIndexes);
-              }
-            }}
-          >
-            {cellContent}
-          </div>
-        );
-      })}
+
+                if (mineIndexes.has(i)) {
+                  // LOSE condition
+                  setGameRunning(false);
+                  setGameExitMessage('Oh no! Better luck next time');
+                } else {
+                  // TODO: check for win condition
+                }
+              }}
+            >
+              {cellContent}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
