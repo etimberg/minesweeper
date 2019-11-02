@@ -40,6 +40,9 @@ const GameBoard = ({
 
     setMineIndexes(mIndexes);
     setIndexToNearbyCount(indexToCnt);
+    setGameRunning(false);
+    setRevealedIndexes(new Set());
+    setGameExitMessage(null);
   };
   useEffect(initMines, [width, height, mineCount]);
 
@@ -55,9 +58,6 @@ const GameBoard = ({
         className="restart-button"
         onClick={() => {
           initMines();
-          setGameRunning(false);
-          setRevealedIndexes(new Set());
-          setGameExitMessage(null);
         }}
       >
         Restart
