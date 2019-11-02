@@ -11,16 +11,27 @@ const GameBoard = ({
   mineCount,
   width,
 }) => {
+  const indexes = [...Array(width * height).keys()];
+  
   // The indexes in the game board where mines are located
   const [mineIndexes, setMineIndexes] = useState(new Set());
 
+  // The map of index -> count of nearby mines for rendering & flood fill
+  const [indexToNearbyCount, setIndexToNearbyCount] = useState([]);
+
   const initMines = () => {
-    const mIndexes = generateMineIndexes(width, height, mineCount);
-    setMineIndexes(new Set(mIndexes));
+    const mIndexes = new Set(generateMineIndexes(width, height, mineCount));
+    const indexToCnt = indexes.map(i => {
+      if (mIndexes.has(i)) {
+        return -1;
+      }
+      return getNearbyCount(i, width, mIndexes);
+    });
+
+    setMineIndexes(mIndexes);
+    setIndexToNearbyCount(indexToCnt);
   };
   useEffect(initMines, [width, height, mineCount]);
-
-  const indexes = [...Array(width * height).keys()];
 
   return (
     <div
@@ -37,7 +48,7 @@ const GameBoard = ({
         if (mineIndexes.has(i)) {
           cellContent = '💣';
         } else {
-          const nearbyCount = getNearbyCount(i, width, mineIndexes);
+          const nearbyCount = indexToNearbyCount[i];
           cellContent = nearbyCount !== 0 ? nearbyCount : '';
         }
         return (
