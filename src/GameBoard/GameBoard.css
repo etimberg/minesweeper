@@ -10,4 +10,5 @@
   border: 1px solid darkgrey;
   box-sizing: border-box;
   line-height: 16px;
+  user-select: none;
 }
