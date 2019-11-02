@@ -14,7 +14,12 @@
   width: 20px;
   height: 20px;
   border: 1px solid darkgrey;
+  background-color: grey;
   box-sizing: border-box;
   line-height: 16px;
   user-select: none;
+}
+
+.tile-revealed {
+  background-color: white;;
 }

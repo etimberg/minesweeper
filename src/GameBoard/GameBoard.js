@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import {
@@ -86,14 +87,16 @@ const GameBoard = ({
           }
           return (
             <div
-              className="tile"
+              className={classNames({
+                tile: true,
+                'tile-revealed': revealedIndexes.has(i)
+              })}
               key={`tile-${row}-${column}`}
               style={{
                 gridColumnStart: column + 1,
                 gridColumnEnd: column + 2,
                 gridRowStart: row + 1,
                 gridRowEnd: row + 2,
-                backgroundColor: revealedIndexes.has(i) ? 'white' : 'grey',
               }}
               onClick={() => {
                 let updatedIndexes;
