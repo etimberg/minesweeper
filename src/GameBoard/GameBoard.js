@@ -43,6 +43,12 @@ const GameBoard = ({
   };
   useEffect(initMines, [width, height, mineCount]);
 
+  if (indexes.length - revealedIndexes.size === mineCount && gameRunning) {
+    // There are only mines left to reveal.
+    setGameRunning(false);
+    setGameExitMessage('Congratulations!!!');
+  }
+
   return (
     <div className="game">
       <button
@@ -97,6 +103,8 @@ const GameBoard = ({
                   return;
                 }
 
+                setGameRunning(true);
+
                 if (nearbyCount === 0) {
                   // Clicked on an empty space. Need to flood fill
                   const filled = floodFillMap(i, width, height, indexToNearbyCount);
@@ -111,8 +119,6 @@ const GameBoard = ({
                   // LOSE condition
                   setGameRunning(false);
                   setGameExitMessage('Oh no! Better luck next time');
-                } else {
-                  // TODO: check for win condition
                 }
               }}
             >
