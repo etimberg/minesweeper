@@ -7,8 +7,9 @@
 - [x] Generate numbers & draw
 - [x] Switch to hidden tiles & add click handler
 - [x] Handle click on empty space - flood fill
-- [ ] Handle click on mine
+- [x] Handle click on mine
 - [x] Handle click on number
+- [ ] Handle winning the game
 - [ ] Show win message or lose error message
 - [ ] Unit testing of utils
 - [ ] Unit testing of mine helpers

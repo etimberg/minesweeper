@@ -8,7 +8,7 @@ export function generateMineIndexes(width, height, mineCount) {
   return shuffle(indexes).slice(0, mineCount);
 }
 
-export function getNearbyCount(i, width, mineIndexes) {
+export function getNearbyCount(i, width, height, mineIndexes) {
   // Return the count of nearby mines
   let count = 0;
   const [row, col] = indexToRowCol(i, width);
@@ -20,7 +20,14 @@ export function getNearbyCount(i, width, mineIndexes) {
         continue;
       }
 
-      const testIndex = rowColToIndex(row + y, col + x, width);
+      const newRow = row + y;
+      const newCol = col + x;
+
+      if (newRow < 0 || newCol < 0 || newRow >= height || newCol >= width) {
+        continue;
+      }
+
+      const testIndex = rowColToIndex(newRow, newCol, width);
       if (mineIndexes.has(testIndex)) {
         count += 1;
       }

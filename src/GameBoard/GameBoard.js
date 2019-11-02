@@ -35,7 +35,7 @@ const GameBoard = ({
       if (mIndexes.has(i)) {
         return -1;
       }
-      return getNearbyCount(i, width, mIndexes);
+      return getNearbyCount(i, width, height, mIndexes);
     });
 
     setMineIndexes(mIndexes);
@@ -91,6 +91,11 @@ const GameBoard = ({
               }}
               onClick={() => {
                 let updatedIndexes;
+
+                if (gameExitMessage) {
+                  // The game exited for some reason
+                  return;
+                }
 
                 if (nearbyCount === 0) {
                   // Clicked on an empty space. Need to flood fill
