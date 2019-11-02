@@ -85,11 +85,14 @@ const GameBoard = ({
               cellContent = nearbyCount !== 0 ? nearbyCount : '';
             }
           }
+
+          // const tileCountStyle = `tile-${nearbyCount}`;
           return (
             <div
               className={classNames({
                 tile: true,
-                'tile-revealed': revealedIndexes.has(i)
+                'tile-revealed': revealedIndexes.has(i),
+                [`tile-${nearbyCount}`]: true,
               })}
               key={`tile-${row}-${column}`}
               style={{
