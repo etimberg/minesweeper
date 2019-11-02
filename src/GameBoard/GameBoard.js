@@ -116,13 +116,15 @@ const GameBoard = ({
                   // Clicked on a number. Just reveal that space
                   updatedIndexes = new Set([...revealedIndexes, i]);
                 }
-                setRevealedIndexes(updatedIndexes);
 
                 if (mineIndexes.has(i)) {
-                  // LOSE condition
+                  // LOSE condition. Reveal all mines & exit
+                  updatedIndexes = new Set([...updatedIndexes, ...mineIndexes]);
                   setGameRunning(false);
                   setGameExitMessage('Oh no! Better luck next time');
                 }
+
+                setRevealedIndexes(updatedIndexes);
               }}
             >
               {cellContent}
