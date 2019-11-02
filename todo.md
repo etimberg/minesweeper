@@ -11,11 +11,12 @@
 - [x] Handle click on number
 - [x] Handle winning the game
 - [x] Show win message or lose error message
-- [ ] Unit testing of utils
-- [ ] Unit testing of mine helpers
+- [x] Unit testing of utils
+- [x] Unit testing of mine helpers
+- [ ] Unit testing of game component
 - [ ] Add width, height, mine count controls
 - [x] Add restart functionality
 - [ ] Optional: prevent lose on first click
 - [ ] Extra: keep track of stats (fastest win, winning streak)
 - [ ] Extra: flag mines with right click
-- [ ] Extra: number colours
+- [x] Extra: number colours
