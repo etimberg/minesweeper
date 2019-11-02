@@ -1,16 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { generateMineIndexes } from './mines';
+import { indexToRowCol } from './utils';
+
+import './GameBoard.css';
+
 const GameBoard = ({
   height,
   mineCount,
   width,
 }) => {
-  
+  // The indexes in the game board where mines are located
+  const [mineIndexes, setMineIndexes] = useState(new Set());
+
+  const initMines = () => {
+    const mIndexes = generateMineIndexes(width, height, mineCount);
+    setMineIndexes(new Set(mIndexes));
+  };
+  useEffect(initMines, [width, height, mineCount]);
+
+  const indexes = [...Array(width * height).keys()];
 
   return (
-    <div className="game-board">
-      GAME goes here
+    <div
+      className="game-board"
+      style={{
+        height: `${height * 20}px`,
+        width: `${width * 20}px`,
+      }}
+    >
+      {indexes.map(i => {
+        const [row, column] = indexToRowCol(i, width);
+        return (
+          <div
+            className="tile"
+            style={{
+              gridColumnStart: column + 1,
+              gridColumnEnd: column + 2,
+              gridRowStart: row + 1,
+              gridRowEnd: row + 2,
+            }}
+          >
+            {mineIndexes.has(i) ? '💣' : ''}
+          </div>
+        );
+      })}
     </div>
   );
 };

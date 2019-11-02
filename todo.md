@@ -1,9 +1,9 @@
 # Items To Do
 
 - [x] Skeleton app
-- [ ] Create game component
-- [ ] Draw blank grid at the correct size
-- [ ] Generate mine locations & draw
+- [x] Create game component
+- [x] Draw blank grid at the correct size
+- [x] Generate mine locations & draw
 - [ ] Generate numbers & draw
 - [ ] Switch to hidden tiles & add click handler
 - [ ] Handle click on empty space - flood fill

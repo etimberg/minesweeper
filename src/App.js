@@ -6,6 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <h2>Welcome to Minesweeper</h2>
       <GameBoard
         height={9}
         mineCount={10}
